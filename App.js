@@ -13,7 +13,7 @@ const matchContentwithHeader = {
 									title: '',
 									headerLeft: null,
 										headerStyle: {
-										backgroundColor: '#1b5e20',
+										backgroundColor: '#23B24B',
 										elevation: 0,
 										shadowOpacity: 0,
 									}

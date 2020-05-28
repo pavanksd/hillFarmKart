@@ -15,7 +15,7 @@ export default class HomeContainer extends Component {
 					<Text style = {styles.subTitleText}>Virtual Farmers' Market of Darjeeling</Text>
 				</View>
 				<View style={styles.browseCatalog}>
-					<TouchableOpacity style={styles.buttonBrowse} onPress={()=>this.props.navigation.navigate('Login')} >
+					<TouchableOpacity activeOpacity={.7}  style={styles.buttonBrowse} onPress={()=>this.props.navigation.navigate('Login')} >
 						<Text style={styles.buttonText}> Browse Farm Fresh </Text>
 					</TouchableOpacity>
 				</View>
@@ -37,13 +37,13 @@ const styles = StyleSheet.create({
 		  flex:1,
 	  },
 	  browseCatalog:{
-			  flex:1,
-			  alignSelf: 'center',
-			  justifyContent:'center'
+		  flex:1,
+		  alignSelf: 'center',
+		  justifyContent:'center'
 	  },
 	  mainTitleText:{
 		  backgroundColor:'#ffffff',
-		  color: '#1b5e20',
+		  color: '#23B24B',
 		  fontSize: 40,
 	  },	
 	  subTitleText:{
@@ -52,13 +52,13 @@ const styles = StyleSheet.create({
 		  color: '#ffffff',
 	  },
 	  buttonBrowse: {
-	  alignItems: 'center',
-	  backgroundColor: '#ffffff',
+		  alignItems: 'center',
+		  backgroundColor: '#ffffff',
 		  padding: 10,
 		  borderRadius:8
 	  },
 	  buttonText:{
-		  color:'#1b5e20',
+		  color:'#23B24B',
 		  fontSize:20
 	  }
   });
