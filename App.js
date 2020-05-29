@@ -3,8 +3,9 @@ import React, { Component } from 'react'
 import { createStackNavigator,CardStyleInterpolators } from "@react-navigation/stack"
 import { NavigationContainer } from "@react-navigation/native"
 
-import HomeScreen from './src/components/homeContainer'
-import LoginScreen from './src/components/loginContainer'
+import HomeScreen from './src/screens/homeScreen'
+import LoginScreen from './src/screens/loginScreen'
+import CatalogScreen from './src/screens/catalogScreen'
 
 
 const Stack = createStackNavigator()
@@ -26,6 +27,20 @@ export default class App extends Component {
 					 cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS }}>
 					<Stack.Screen name="home" component={HomeScreen}  options={matchContentwithHeader} />
 					<Stack.Screen name="Login" component={LoginScreen} options={matchContentwithHeader} />
+					<Stack.Screen name="Catalog" component={CatalogScreen} options={{
+						title: 'e-Hatt Items',
+						headerTintColor: '#FFFFFF',
+						headerLeft: null,
+							headerStyle: {
+							backgroundColor: '#23B24B',
+							elevation: 0,
+							shadowOpacity: 0,
+						},
+						headerTitleStyle: {
+							fontSize: 34,
+						  },
+					}
+					} />
 				</Stack.Navigator>
 			</NavigationContainer>
       

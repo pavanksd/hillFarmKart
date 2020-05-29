@@ -9,5 +9,9 @@ export  const  globalStyles = StyleSheet.create({
     },
     textColor:{
         color: appColor
+    },
+    textMainHeading:{
+        fontSize:30,
+        color:appColor
     }
 });

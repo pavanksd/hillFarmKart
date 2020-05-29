@@ -39,7 +39,8 @@ const styles = StyleSheet.create({
 	  browseCatalog:{
 		  flex:1,
 		  alignSelf: 'center',
-		  justifyContent:'center'
+		  justifyContent:'center',
+		  marginBottom:90,
 	  },
 	  mainTitleText:{
 		  backgroundColor:'#ffffff',
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
 	  },
 	  buttonBrowse: {
 		  alignItems: 'center',
-		  backgroundColor: '#ffffff',
+		  backgroundColor: '#FFFFFF',
 		  padding: 10,
 		  borderRadius:8
 	  },

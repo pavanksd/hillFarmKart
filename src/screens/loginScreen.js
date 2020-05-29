@@ -10,13 +10,14 @@ export default class loginContainer extends Component {
     }
 
     validateLoginCreds=()=> {
-        console.log(this.state)
+        console.log(this.state);
+        this.props.navigation.navigate('Catalog');
     }
     render() {
         return (
             <View style={globalStyles.container} >
                 <View style={styles.login}>
-                    <Text style={{fontSize:30,color:'#23B24B'}}>
+                    <Text style={globalStyles.textMainHeading}>
                         Login
                     </Text>
                     <View style={{padding:20}}>
