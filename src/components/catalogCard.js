@@ -18,13 +18,16 @@ export default class catalogCard extends Component {
                     <Text style={styles.itemName} >{this.props.item.itemName}</Text>
                     <Text style={styles.itemName} >Rs 50/- per Kg</Text>
                     <Text>Add to Kart:</Text>
-                    <Picker
-                        selectedValue={this.state.qty}
-                        style={{ height: 50, width: 150 }}
-                        onValueChange={(itemValue, itemIndex) =>
-                            this.setState({qty: itemValue}) }>
-                        {pickerItem}
-                    </Picker>
+                    <View style={{flexDirection:"row",backgroundColor:'#EEEEEE',width: 92}}>
+                        <Text style={{marginLeft:5,marginTop:10,color:'#23B24B'}}>Qty: </Text>
+                        <Picker
+                            selectedValue={this.state.qty}
+                            style={{ height: 35, width: 70,color:'#23B24B'}}
+                            onValueChange={(itemValue, itemIndex) =>
+                                this.setState({qty: itemValue}) }>
+                            {pickerItem}
+                        </Picker>
+                    </View>
                 </View>
                 <TouchableOpacity style={styles.addToCartTButton} activeOpacity={.7}>
 						<Text style={styles.addToCartText}>Add</Text>
