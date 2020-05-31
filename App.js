@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { Button } from 'react-native'
 import { createStackNavigator,CardStyleInterpolators } from "@react-navigation/stack"
 import { NavigationContainer } from "@react-navigation/native"
+import { Provider } from 'react-redux';
 
+import store from './src/redux/store';
 import HomeScreen from './src/screens/homeScreen'
 import LoginScreen from './src/screens/loginScreen'
 import CatalogScreen from './src/screens/catalogScreen'
@@ -24,6 +26,7 @@ const matchContentwithHeader = {
 export default class App extends Component {
   render() {
     return (
+		<Provider store={store} >
 			<NavigationContainer>
 				<Stack.Navigator initialRouteName="Home" screenOptions={{
 					 cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS }}>
@@ -59,6 +62,7 @@ export default class App extends Component {
 					<Stack.Screen name="OrderSucess" component={OrderSucessScreen} options={matchContentwithHeader} />
 				</Stack.Navigator>
 			</NavigationContainer>
+		</Provider>
       
     );
   }

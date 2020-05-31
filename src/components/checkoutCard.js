@@ -12,7 +12,6 @@ const ProceedCheckout = ()=> {
 }
 export default class checkoutCard extends Component {
     render() {
-        console.log(this.props);
         return (
             <View style={styles.checkoutCard}>
                 <View>
