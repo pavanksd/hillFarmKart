@@ -10,9 +10,8 @@ const initialState ={
 const loginReducer = (state=initialState,action) => {
     switch(action.type){
         case REQUEST_LOGIN: return {
-            responseData:{},
+            ...state,
             isAuthenticating:true,
-            requestError:false
         }
         case LOGIN_RESPONSE: return{
             ...state,
@@ -20,15 +19,12 @@ const loginReducer = (state=initialState,action) => {
             responseData:action.payload
         }
         case LOGIN_ERROR: return{
+            ...state,
             isAuthenticating:false,
             requestError:true,
             responseData:{code:503}
         }
-        default : return {
-            isAuthenticating:false,
-            responseData:{},
-            requestError:false
-        }
+        default : return state
     }
 }
 

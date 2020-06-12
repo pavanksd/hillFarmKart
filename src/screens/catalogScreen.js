@@ -14,7 +14,7 @@ export default class catalogContainer extends Component {
             <View style = { globalStyles.container }>
                 <View style = {{flex:1}}>
                     <SearchCatalog />
-                    <CatalogArea />
+                    <CatalogArea navigation={this.props.navigation} />
                 </View>
             </View>
         )
@@ -29,7 +29,7 @@ export default class catalogContainer extends Component {
             }
           }
         } catch(e) {
-          // error reading value
+          this.props.navigation.dispatch(StackActions.replace('Login'));
         }
       }
 }

@@ -1,5 +1,5 @@
 import {REQUEST_LOGIN,LOGIN_RESPONSE,LOGIN_ERROR} from './loginType'
-import axios from 'axios';
+import axios from 'axios'
 
 import {constant} from '../../constants'
 
@@ -30,11 +30,9 @@ export const resetState = () =>{
 
 export const authUser = (email,password)=>{
     const data = {'email':email,'password':password}
-    const instance = axios.create();
-    instance.defaults.timeout = 2500;
     return (dispatch) =>{
         dispatch(requestLogin())
-        axios.post(constant.API_BASE_URL+"/api/v1/user/login",data,{timeout:5000}).then(response =>{
+        axios.post(constant.API_BASE_URL+"/api/v1/user/login",data,{timeout:10000}).then(response =>{
             dispatch(loginResponse(response.data));
         }).catch(error =>{
             dispatch(loginError());

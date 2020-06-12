@@ -10,7 +10,7 @@ import LoginScreen from './src/screens/loginScreen'
 import CatalogScreen from './src/screens/catalogScreen'
 import CheckoutScreen  from './src/screens/checkoutScreen'
 import UserDetailsScreen from './src/screens/userDetailsScreen'
-import OrderSucessScreen from './src/screens/orderStatusScreen'
+import OrderSuccessScreen from './src/screens/orderStatusScreen'
 
 const Stack = createStackNavigator()
 
@@ -59,7 +59,7 @@ export default class App extends Component {
 					/>
 					<Stack.Screen name="Checkout" component={CheckoutScreen} options={matchContentwithHeader} />
 					<Stack.Screen name="UserDetails" component={UserDetailsScreen} options={matchContentwithHeader} />
-					<Stack.Screen name="OrderSucess" component={OrderSucessScreen} options={matchContentwithHeader} />
+					<Stack.Screen name="OrderSuccess" component={OrderSuccessScreen} options={matchContentwithHeader} />
 				</Stack.Navigator>
 			</NavigationContainer>
 		</Provider>

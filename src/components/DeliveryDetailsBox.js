@@ -1,19 +1,32 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View,TextInput,TouchableOpacity } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import { Text, StyleSheet, View,TextInput,TouchableOpacity, Alert } from 'react-native'
+import {connect} from 'react-redux'
+import { confirmOrder } from '../redux/actionindex'
+import AsyncStorage from '@react-native-community/async-storage'
 
 import { globalStyles } from "../styles/styles";
 
-const PlaceOrder = ()=> {
-    const navigation = useNavigation();
-    return (
-        <TouchableOpacity activeOpacity={.7}  style={styles.placeOrderBtn} onPress={()=>navigation.navigate('OrderSucess')} >
-        <Text style={styles.buttonText}>Place Order</Text>
-    </TouchableOpacity>
-    );
-}
-export default class DeliveryDetailsBox extends Component {
+export class DeliveryDetailsBox extends Component {
+    state = {
+        userId:'',
+        userAddress:'',
+        userContact:'',
+        userName:''
+    }
+    componentDidUpdate(prevProps){
+        let {isPlacingOrder} = this.props;
+        let {placeOrderData} = this.props;
+        if(prevProps.isPlacingOrder!=isPlacingOrder){
+            if(placeOrderData.status===true){
+                this.props.navigation.replace('OrderSuccess');
+            }
+        }
+    }
+
     render() {
+        let placeOrder =    <TouchableOpacity activeOpacity={.7}  style={styles.placeOrderBtn} onPress={()=>this.confirmCheckout()} >
+                                <Text style={styles.buttonText}>Place Order</Text>
+                            </TouchableOpacity>
         return (
             <View style={{paddingTop:40}}>
                 <View style={styles.deliveryDetailCard} >
@@ -22,15 +35,15 @@ export default class DeliveryDetailsBox extends Component {
                     <Text style={[globalStyles.textColor,styles.textInputHeading]} >
                             Contact Number
                         </Text>
-                        <TextInput style={styles.textInput} keyboardType="number-pad"   maxLength={10} onChangeText={(text) => this.setState({contactNumber:text})} ></TextInput>
+                        <TextInput style={styles.textInput} keyboardType="number-pad"   maxLength={10} onChangeText={(text) => this.setState({userContact:text})} ></TextInput>
                         <Text style={[globalStyles.textColor,styles.textInputHeading]}>
                             User Name
                         </Text>
-                        <TextInput style={styles.textInput}></TextInput>
+                        <TextInput style={styles.textInput} onChangeText={(text) => this.setState({userName:text})} ></TextInput>
                         <Text style={[globalStyles.textColor,styles.textInputHeading]}>
                             Address
                         </Text>
-                        <TextInput multiline numberOfLines={5} style={styles.textInput}></TextInput>
+                        <TextInput multiline numberOfLines={5} style={styles.textInput} onChangeText={(text) => this.setState({userAddress:text})} ></TextInput>
                         <View style={{alignItems:"center",paddingHorizontal:30,alignContent:"center"}}>
                             <Text style={{color:'#23B24B',fontSize:16,marginTop:10,fontStyle:"italic"}}>
                                 *Delivery Available from Lebong till Jorebunglow
@@ -41,13 +54,61 @@ export default class DeliveryDetailsBox extends Component {
                         </View>
                     </View>
                     <View style={{padding:20}}>
-                        <PlaceOrder />
+                        {placeOrder}
                     </View>
                 </View>
             </View>
         )
     }
+
+    confirmCheckout = async () => {
+        if(this.state.userAddress=='' || this.state.userContact=='' || this.state.userName=='' ){
+            Alert.alert('','Please fill all the details to place order');
+            return;
+        }
+
+        try {
+            const value = await AsyncStorage.getItem('userDetails')
+            if(value !== null) {
+              if(!value){
+                  this.props.navigation.dispatch(StackActions.replace('Login'));
+              }else{
+                  let userValue = JSON.parse(value);
+                  let userId = userValue.id
+                  let userDetails = {
+                      userId:userId,
+                      userAddress:this.state.userAddress,
+                      userContact:this.state.userContact,
+                      userName:this.state.userName
+                  }
+                this.props.confirmOrder(this.props.cartItems,userDetails);
+              }
+            }
+        }
+        catch(e) {
+            this.props.navigation.dispatch(StackActions.replace('Login'));
+          }
+    }
 }
+
+
+const mapStateToProps = (state)=>{    
+    return{
+        cartItems:state.cart.cartData,
+        placeOrderData:state.cart.placeOrderData,
+        isPlacingOrder:state.cart.isPlacingOrder
+    }
+}
+const mapDispatchToProps  = (dispatch) =>{
+    return{
+        confirmOrder:(cartItems,userDetails) =>{ dispatch(confirmOrder(cartItems,userDetails)) },
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps) 
+(DeliveryDetailsBox);
 
 const styles = StyleSheet.create({
     deliveryDetailCard:{

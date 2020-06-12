@@ -13,24 +13,25 @@ export class logincard extends Component {
     state = {
         userName:'',
         password:''
-    }    
-    render() {
+    }
+
+    componentDidUpdate(prevProps){
         let {isAuthenticating} = this.props;  
         let {responseData} = this.props;
         let {requestError} = this.props;
-        if(!isAuthenticating && Object.keys(responseData).length>0){
+        if(isAuthenticating !== prevProps.isAuthenticating && responseData !== prevProps.responseData ){
             if(responseData.authenticate===true && responseData.code===200){
-                console.log(responseData);
                 this.Useruthenticated();
                 this.props.navigation.dispatch(StackActions.replace('Catalog'));
              } else if(responseData.authenticate===false && responseData.code===401){
                 Alert.alert('','Invalid credentials');
-                this.props.ResetState();
              }else if(requestError && responseData.code===503){
-                Alert.alert('Alert','Network Error');
-                this.props.ResetState();
+                Alert.alert('Alert','Service currently unavailable');
             }
         }
+    }
+    render() {
+       let {isAuthenticating} = this.props;  
         let loader=null;
         if(isAuthenticating){
             loader=<Loader />
@@ -81,6 +82,7 @@ export class logincard extends Component {
     Useruthenticated = async () => {
         try {
           await AsyncStorage.setItem('isUseruthenticated', '1');
+          await AsyncStorage.setItem('userDetails', JSON.stringify(this.props.responseData.userData));
         } catch (e) {
           Alert.alert('','Something happend!!! Please try logging in again')
         }
