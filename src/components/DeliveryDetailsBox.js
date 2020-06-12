@@ -4,6 +4,8 @@ import {connect} from 'react-redux'
 import { confirmOrder } from '../redux/actionindex'
 import AsyncStorage from '@react-native-community/async-storage'
 
+import Loader from '../components/loader'
+
 import { globalStyles } from "../styles/styles";
 
 export class DeliveryDetailsBox extends Component {
@@ -24,6 +26,11 @@ export class DeliveryDetailsBox extends Component {
     }
 
     render() {
+        let {isPlacingOrder} = this.props;
+        let loader=null;
+        if(isPlacingOrder){
+            loader=<Loader />
+        }
         let placeOrder =    <TouchableOpacity activeOpacity={.7}  style={styles.placeOrderBtn} onPress={()=>this.confirmCheckout()} >
                                 <Text style={styles.buttonText}>Place Order</Text>
                             </TouchableOpacity>
@@ -57,6 +64,7 @@ export class DeliveryDetailsBox extends Component {
                         {placeOrder}
                     </View>
                 </View>
+                {loader}
             </View>
         )
     }
