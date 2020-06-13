@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import store from './src/redux/store';
 import HomeScreen from './src/screens/homeScreen'
 import LoginScreen from './src/screens/loginScreen'
+import SignupScreen from './src/screens/signupScreen'
 import CatalogScreen from './src/screens/catalogScreen'
 import CheckoutScreen  from './src/screens/checkoutScreen'
 import UserDetailsScreen from './src/screens/userDetailsScreen'
@@ -32,6 +33,7 @@ export default class App extends Component {
 					 cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS }}>
 					<Stack.Screen name="Home" component={HomeScreen}  options={matchContentwithHeader} />
 					<Stack.Screen name="Login" component={LoginScreen} options={matchContentwithHeader} />
+					<Stack.Screen name="SignUp" component={SignupScreen} options={matchContentwithHeader} />
 					<Stack.Screen name="Catalog" component={CatalogScreen}
 					
 					options={({route, navigation}) => (

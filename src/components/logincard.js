@@ -23,8 +23,8 @@ export class logincard extends Component {
             if(responseData.authenticate===true && responseData.code===200){
                 this.Useruthenticated();
                 this.props.navigation.dispatch(StackActions.replace('Catalog'));
-             } else if(responseData.authenticate===false && responseData.code===401){
-                Alert.alert('','Invalid credentials');
+             } else if(responseData.authenticate===false && responseData.code===200){
+                Alert.alert('','Invalid credentials/ Account does not exist');
              }else if(requestError && responseData.code===503){
                 Alert.alert('Alert','Service currently unavailable');
             }
@@ -44,13 +44,13 @@ export class logincard extends Component {
                     </Text>
                     <View style={{padding:20}}>
                         <Text style={[globalStyles.textColor,styles.textInputHeading]}>
-                            User Name
+                            Email
                         </Text>
-                        <TextInput style={styles.textInput} onChangeText={(text) => this.setState({userName:text})}></TextInput>
+                        <TextInput style={styles.textInput} autoCapitalize={"none"} keyboardType={"email-address"} onChangeText={(text) => this.setState({userName:text})}></TextInput>
                         <Text style={[globalStyles.textColor,styles.textInputHeading]} >
-                            Contact Number
+                            Password
                         </Text>
-                        <TextInput style={styles.textInput} keyboardType="number-pad"   maxLength={10} onChangeText={(text) => this.setState({password:text})} ></TextInput>
+                        <TextInput style={styles.textInput} onChangeText={(text) => this.setState({password:text})} ></TextInput>
                     </View>
                     <View style={{padding:20}}>
                         <TouchableOpacity activeOpacity={.7}  style={styles.buttonLogin} onPress={()=>this.validateLoginCreds()} >
@@ -59,7 +59,7 @@ export class logincard extends Component {
                         <View style={{alignItems:"center",marginVertical:40,flexDirection:'row',justifyContent:"center"}}>
                             <Text style={styles.newUser}>if you are a new user| 
                             </Text>
-                            <TouchableOpacity onPress={()=> Linking.openURL("http://google.com")} >
+                            <TouchableOpacity onPress={()=>this.props.navigation.dispatch(StackActions.replace('SignUp'))  } >
                             <Text style={{color:'orange'}}> Sign Up</Text> 
                             </TouchableOpacity>
                         </View>
