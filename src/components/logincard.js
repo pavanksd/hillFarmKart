@@ -50,7 +50,7 @@ export class logincard extends Component {
                         <Text style={[globalStyles.textColor,styles.textInputHeading]} >
                             Password
                         </Text>
-                        <TextInput style={styles.textInput} onChangeText={(text) => this.setState({password:text})} ></TextInput>
+                        <TextInput style={styles.textInput}  autoCapitalize={"none"} onChangeText={(text) => this.setState({password:text})} secureTextEntry={true} ></TextInput>
                     </View>
                     <View style={{padding:20}}>
                         <TouchableOpacity activeOpacity={.7}  style={styles.buttonLogin} onPress={()=>this.validateLoginCreds()} >

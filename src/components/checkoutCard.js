@@ -36,13 +36,20 @@ export class checkoutCard extends Component {
             </View>
         )
         return (
-            <View style={styles.checkoutCard}>
-                <View>
-                    <Text style={{color:'#23B24B',fontSize:25}}>Items In Your Cart</Text>
-                    <ScrollView>
-                        {addedItems}
-                    </ScrollView>                    
-                    {proceedCheckout}
+            <View>
+                <View style={{flexDirection:"row-reverse",marginLeft:10}}>
+                    <View style={styles.cartTotal}>
+                        <Text style={styles.totalText} >Total: ₹ {this.props.totalPrice}</Text>
+                    </View>
+                </View>
+                <View style={styles.checkoutCard}>
+                    <View>
+                        <Text style={{color:'#23B24B',fontSize:25}}>Items In Your Cart</Text>
+                        <ScrollView>
+                            {addedItems}
+                        </ScrollView>
+                        {proceedCheckout}
+                    </View>
                 </View>
             </View>
         )
@@ -69,6 +76,7 @@ const mapStateToProps = (state)=>{
     return{
         cartItems:state.cart.cartData,
         totalQty:state.cart.totalQty,
+        totalPrice:state.cart.totalPrice,
     }
 }
 const mapDispatchToProps  = (dispatch) =>{
@@ -85,7 +93,7 @@ export default connect(
 
 const styles = StyleSheet.create({
     checkoutCard:{
-        padding:20,
+        padding:18,
         backgroundColor:"#FFFFFF",
         borderRadius:8,
         alignItems:"center",
@@ -105,5 +113,15 @@ const styles = StyleSheet.create({
     },
     cartButton:{
         padding:9,
+    },
+    cartTotal:{
+        paddingHorizontal:10,
+        backgroundColor:'#FFFFFF',
+        borderTopStartRadius:8,
+        borderTopEndRadius:8
+    },
+    totalText:{
+        color: '#23B24B',
+        fontSize:24
     }
 })

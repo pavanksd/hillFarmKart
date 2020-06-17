@@ -26,8 +26,9 @@ const styles = StyleSheet.create({
         justifyContent:"center"
     },
     CheckOutCard:{
-        flex:2,
-        padding:20
+        flex:3,
+        padding:20,
+        marginBottom:40
     }
 
 })

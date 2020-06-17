@@ -60,12 +60,12 @@ export class signUpCard extends Component {
                         <Text style={[globalStyles.textColor,styles.textInputHeading]} >
                             Password
                         </Text>
-                        <TextInput style={styles.textInput}  placeholder="Min 8 character" onChangeText={(text) => this.setState({password:text})}  secureTextEntry={true} ></TextInput>
+                        <TextInput style={styles.textInput}  autoCapitalize={"none"} placeholder="Min 8 character" onChangeText={(text) => this.setState({password:text})}  secureTextEntry={true} ></TextInput>
 
                         <Text style={[globalStyles.textColor,styles.textInputHeading]} >
                             Confirm Password
                         </Text>
-                        <TextInput style={styles.textInput}  placeholder="Min 8 character" onChangeText={(text) => this.setState({confirmPassword:text})} ></TextInput>
+                        <TextInput style={styles.textInput}  autoCapitalize={"none"} placeholder="Min 8 character" onChangeText={(text) => this.setState({confirmPassword:text})} ></TextInput>
                         
                         <View style={{padding:20}}>
                         <TouchableOpacity activeOpacity={.7}  style={styles.buttonSignUp} onPress={()=>this.validateSignupCreds()} >
