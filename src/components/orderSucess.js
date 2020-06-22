@@ -15,7 +15,7 @@ export default class orderSucess extends Component {
                         </View>
                         <View style = {[styles.centerBox,{flex:1}]}>
                             <Text style={globalStyles.textMainHeading}>Delivery on</Text>
-                            <Text style = {styles.mainTitleText} > 6th June </Text>
+                            <Text style = {styles.mainTitleText} > Next Friday </Text>
                         </View>
                         <View style = {[styles.centerBox,{flex:1}]}>
                             <Text style = {styles.mainTitleText}> Hill Fram <Text style = {{fontStyle: 'italic'}}>Kart </Text></Text>

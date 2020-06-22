@@ -1,18 +1,13 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native'
-import { Picker } from '@react-native-community/picker';
 import {connect} from 'react-redux'
-import { addToCart } from '../redux/actionindex';
+import { addToCart,subFromCart } from '../redux/actionindex';
 
 export class catalogCard extends Component {
-    state = {
-        qty: 1,
-        value:["1","2","3","4","5"]
-      };
     render() {
-        let pickerItem = this.state.value.map( (s, i) => {
-            return <Picker.Item key={i} value={s} label={s} />
-        });
+        let {cartItems} = this.props;
+        let {id} = this.props.item;
+        let itemQty = typeof cartItems[id] !== 'undefined' ? cartItems[id].qty:0;
         return (
             <View style={styles.catalogCard}>
                 <Image source={require('../../assets/images/catalogDefault.jpg')} style={styles.catalogImage} />
@@ -20,21 +15,17 @@ export class catalogCard extends Component {
                     <Text style={styles.itemName} >{this.props.item.item_name}</Text>
                     <Text style={styles.itemName} >Rs {parseInt(this.props.item.price)}/- per Kg</Text>
                     <Text>Add to Kart:</Text>
-                    <View style={{flexDirection:"row",backgroundColor:'#EEEEEE',width: 92}}>
-                        <Text style={{marginLeft:5,marginTop:10,color:'#23B24B'}}>Qty: </Text>
-                        <Picker
-                            selectedValue={this.state.qty}
-                            style={{ height: 35, width: 70,color:'#23B24B'}}
-                            onValueChange={(itemValue, itemIndex) =>
-                                this.setState({qty: itemValue}) }>
-                            {pickerItem}
-                        </Picker>
+                    <View style={{flexDirection:"row",marginTop:10,marginLeft:20}}>
+                        <TouchableOpacity style={styles.addToCartTButton} activeOpacity={.7} onPress={()=>this.subItemfromCart()} >
+                            <Text style={styles.addToCartText}>-</Text>
+                        </TouchableOpacity>
+                            <Text style={[styles.addToCartText,{color:'#000000',backgroundColor:'#DCDCDC',fontSize:20,paddingTop:5,paddingHorizontal:10, }]} >{itemQty}</Text>
+                        <TouchableOpacity style={styles.addToCartTButton} activeOpacity={.7} onPress={()=>this.addItemToCart()} >
+                            <Text style={styles.addToCartText}>+</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
                 <View style={{flex:1}}>
-                <TouchableOpacity style={styles.addToCartTButton} activeOpacity={.7} onPress={()=>this.addItemToCart()} >
-						<Text style={styles.addToCartText}>+</Text>
-				</TouchableOpacity>
                 </View>
             </View>
         )
@@ -44,16 +35,25 @@ export class catalogCard extends Component {
         itemDetails = this.props.item;
         this.props.addToCart(itemDetails);
     }
+
+    subItemfromCart(){
+        itemDetails = this.props.item;
+        let {cartItems} = this.props;
+        if( typeof cartItems[itemDetails.id] ==='undefined') return;
+        this.props.subFromCart(itemDetails);
+    }
 }
 
 const mapStateToProps = (state)=>{
     return{
         cartItems:state.cart.cartData,
+        totalQty:state.cart.totalQty,
     }
 }
 const mapDispatchToProps  = (dispatch) =>{
     return{
         addToCart:(data) =>{ dispatch(addToCart(data)) },
+        subFromCart:(data) =>{ dispatch(subFromCart(data)) },
     }
 }
 
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         marginVertical:5
     },
     catalogImage:{
-        height: 90,
+        height: 100,
         width: 100,
         resizeMode: 'stretch',
         borderRadius: 8,
@@ -80,17 +80,12 @@ const styles = StyleSheet.create({
         fontSize:20
     },
     addToCartTButton:{
-        justifyContent:"flex-end",
-        alignItems:"flex-end",
-        flex: 1,
-        marginRight:20,
-        marginBottom:20,
+        alignItems:"center",
+        marginHorizontal:10
     }, 
     addToCartText: {
         alignItems: 'center',
-        backgroundColor: '#23B24B',
-        paddingHorizontal: 12,
         fontSize:30,
-        borderRadius:25,
+        color: '#23B24B',
     }
 })
