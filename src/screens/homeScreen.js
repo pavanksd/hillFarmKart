@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet, View,TouchableOpacity,Image } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage';
 
 import { globalStyles } from "../styles/styles";
 
@@ -15,13 +16,32 @@ export default class HomeContainer extends Component {
 					<Text style = {styles.subTitleText}>Virtual Farmers' Market of Darjeeling</Text>
 				</View>
 				<View style={styles.browseCatalog}>
-					<TouchableOpacity activeOpacity={.7}  style={styles.buttonBrowse} onPress={()=>this.props.navigation.navigate('Login')} >
+					<TouchableOpacity activeOpacity={.7}  style={styles.buttonBrowse} onPress={()=>this.isUseruthenticated()} >
 						<Text style={styles.buttonText}> Browse Farm Fresh </Text>
 					</TouchableOpacity>
 				</View>
 			</View>
         )
-    }
+	}
+
+	isUseruthenticated = async () => {
+        try {
+		  const value = await AsyncStorage.getItem('isUseruthenticated')
+          if(value !== null) {
+            if(value){
+                this.props.navigation.navigate('Catalog');
+			}
+			else{
+				this.props.navigation.navigate('Login')
+			}
+		  }
+		  else{
+			this.props.navigation.navigate('Login')
+		}
+        } catch(e) {
+          // error reading value
+        }
+      }
 }
 
 
@@ -39,7 +59,8 @@ const styles = StyleSheet.create({
 	  browseCatalog:{
 		  flex:1,
 		  alignSelf: 'center',
-		  justifyContent:'center'
+		  justifyContent:'center',
+		  marginBottom:90,
 	  },
 	  mainTitleText:{
 		  backgroundColor:'#ffffff',
@@ -53,7 +74,7 @@ const styles = StyleSheet.create({
 	  },
 	  buttonBrowse: {
 		  alignItems: 'center',
-		  backgroundColor: '#ffffff',
+		  backgroundColor: '#FFFFFF',
 		  padding: 10,
 		  borderRadius:8
 	  },
